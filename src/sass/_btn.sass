@@ -1,0 +1,79 @@
+.btn-wrap
+	display: flex
+	button
+		margin: auto
+
+.warning:hover
+	color: $red!important
+
+.warn
+	background-color: $red!important
+	&:hover
+		background-color:	$darkRed!important
+
+.cancel
+	background-color: $greyDark!important
+	&:hover
+		background-color: $darkBlue!important
+
+.btn-main
+	display: block
+	width: 100%
+	height: 40px
+	border-radius: 2px
+	color: $textPrimary
+	background-color: $bcgPrimary
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+	transition: background-color .4s, box-shadow .4s
+	&:hover
+		background: $darkBlue
+		box-shadow: none
+
+.btn-icon
+	display: block
+	width: 40px
+	height: 40px
+	border-radius: 50%
+	color: $textPrimary
+	background-color: $bcgPrimary
+	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
+	transition: background-color .4s, border .4s, color .4s 
+	&:hover
+		background-color: $textPrimary
+		border: 1px solid $bcgPrimary
+		color: $bcgPrimary
+
+.btn-icon-min
+	display: inline-block
+	margin-top: 1px
+	height: 20px
+	width: 20px
+	border-radius: 50%
+	font-size: 11px
+	transition: background-color .4s, color .4s
+	&:hover
+		background-color: $textPrimary
+		color: $bcgPrimary
+
+.pulse.active
+	position: absolute
+	top: 0
+	left: 0
+	width: 40px
+	height: 40px
+	border-radius: 50%
+	animation: 1.5s ease infinite pulse
+	box-shadow: 0 0 0
+	
+@keyframes pulse
+	0%
+		box-shadow: 0 0 0 0 rgba($red, 1)
+	100%
+		box-shadow: 0 0 0 10px rgba($red, 0)
+
+.slash.active:before
+	@extend %extend_before
+	width: 2px
+	height: 100%
+	transform: rotate(45deg)
+	background-color: $red

@@ -1,0 +1,104 @@
+@import "_vars.sass"
+
+.popup
+	@extend %fullScreenSize
+	visibility: hidden
+	opacity: 0
+	z-index: -1
+	background-color: transparent
+	transition: background-color .5s ,opacity .5s
+	.popup-content
+		position: relative
+		width: 100%
+		max-width: 500px
+		min-width: 320px
+		min-height: 250px
+		margin-top: 100px
+		padding: 24px 24px 50px 24px
+		border-radius: 2px
+		box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12)
+		background-color: $bcgSecondary
+		transform: scale(0.95)
+		transition: margin .5s, transform .5s
+		.content-title
+			position: relative
+			padding-bottom: 30px
+			color: $red
+			i
+				padding: 10px
+				font-size: 50px
+			&:after
+				@extend %extend_before
+				bottom: 14px
+				left: 50%
+				transform: translateX(-50%)
+				width: 20%
+				height: 1px
+				background-color: $greyLight
+			h2
+				width: 80%
+				margin: 0 auto
+				font-size: 22px
+		.content-footer
+			display: flex
+			justify-content: center
+			i
+				line-height: 22px
+				color: $greyDark
+			span
+				font-size: 14px
+
+.popup.active
+	z-index: $ind_L
+	opacity: 1
+	visibility: visible
+	background-color: rgba(0,0,0,.688)
+	.popup-content
+		margin-top: 0px
+		transform: scale(1)
+
+.popup-content .fade-out
+	position: absolute
+	top: -35px
+	right: -35px
+	width: 40px
+	z-index: $ind_S
+	line-height: 40px
+	border-radius: 50%
+	text-align: center
+	cursor: pointer
+	color: $textPrimary
+	background-color: $red
+	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12)
+	transition: background-color 0.3s
+	&:hover
+		background-color: $darkRed
+
+.popup-content .btn-main
+		position: absolute
+		bottom: 0
+		height: 50px
+		line-height: 50px
+		display: flex
+		justify-content: center
+		i
+			line-height: 50px
+			font-size: 25px
+
+#popup-error-msg .btn-main
+	left: 0
+
+#popup-confirm-action
+	.content-title
+		i
+			color: $greyDark
+		h2
+			color: $textSecondary
+	.btn-wrap
+		button
+			width: 50%
+			border-radius: 0
+		button:nth-child(1)
+			left: 0
+		button:nth-child(2)
+			right: 0

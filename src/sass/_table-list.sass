@@ -1,0 +1,71 @@
+.table-wrap
+	z-index: 1
+	overflow: hidden
+	position: absolute
+	width: 170px
+	padding: 0px
+	cursor: move
+	font-size: 11px
+	border-radius: 3px
+	box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12)
+	.table-header
+		display: flex
+		justify-content: center
+		height: 22px
+		line-height: 22px
+		text-align: center
+		text-transform: uppercase
+		color: $textPrimary
+		background-color: $bcgPrimary
+		div:nth-child(1)
+			display: inline-block
+			width: 130px
+			overflow: hidden
+			flex: 1 1 auto
+	.table-rows
+		background-color: $bcgSecondary
+		.row
+			display: flex
+			justify-content: center
+			margin: 0
+			padding-left: 5px
+			line-height: 22px
+			border-bottom: 1px solid $borderColor
+			transition: background-color .4s
+			div:nth-child(1)
+				display: inline-block
+				width: 105px
+				overflow: hidden
+				flex: 1 1 auto
+		.row:last-child
+			border-bottom: none
+		.row:hover
+			background-color: $greyLight
+
+.table-wrap
+	input
+		width: 100%
+		background-color: transparent
+		font-size: 11px
+		height: 20px
+		line-height: 20px
+		border: none
+		text-align: center
+		color: $textPrimary
+
+.table-header input
+	text-transform: uppercase
+
+.row input
+	text-align: left
+	color: $textSecondary
+
+.table-wrap .adding
+	height: 22px
+	font-size: 11px
+	border-radius: 0
+	border-top: 1px solid $borderColor
+	background-color: $bcgPrimary
+	transition: background-color .4s
+	&:hover
+		background-color: $darkBlue
