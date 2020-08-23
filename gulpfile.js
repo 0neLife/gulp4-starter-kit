@@ -1,17 +1,17 @@
 "use strict";
 
 // load plugins
-const autoprefixer 		= require('autoprefixer'),
-      browsersync   	= require('browser-sync').create(),
-      del 				 		= require('del'),
-      cssnano    	 		= require('cssnano'),
+const autoprefixer    = require('autoprefixer'),
+      browsersync     = require('browser-sync').create(),
+      del             = require('del'),
+      cssnano         = require('cssnano'),
       imageminMozjpeg = require('imagemin-mozjpeg'),
-      gulp						= require('gulp'),
-      sass 						= require('gulp-sass'),
-      rename 					= require('gulp-rename'),
-      uglify 					= require('gulp-uglify'),
-      postcss 				= require('gulp-postcss'),
-      imagemin 				= require('gulp-imagemin');
+      gulp            = require('gulp'),
+      sass            = require('gulp-sass'),
+      rename          = require('gulp-rename'),
+      uglify          = require('gulp-uglify'),
+      postcss         = require('gulp-postcss'),
+      imagemin        = require('gulp-imagemin');
 
 // load gulp api methods
 const { series, src, dest, parallel } = require('gulp');
