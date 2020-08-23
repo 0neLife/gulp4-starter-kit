@@ -3,7 +3,7 @@
 #### Description: 
 
 <p align="center">
-    <img height="257" width="114" src="https://github.com/0neLife/gulp4-starter-kit/blob/master/src/img/gulp-logo.png" width="100%">
+    <img height="250" src="https://github.com/0neLife/gulp4-starter-kit/blob/master/src/img/gulp-logo.png" width="100%">
   <p align="center">A simple Gulp 4 Starter Kit for modern web development.</p>
 </p>
 
