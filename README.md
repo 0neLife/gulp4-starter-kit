@@ -1,8 +1,16 @@
-# gulp-starter-kit
+# gulp4-starter-kit
 
-#### Author: http://www.yubutsan.com.ua/
+#### Description: 
 
-<img src="https://github.com/0neLife/gulp-starter-kit/blob/master/src/img/logo.png" width="100%">  
+<p align="center">
+    <img src="https://github.com/0neLife/gulp4-starter-kit/blob/master/src/img/gulp-logo.png" width="100%">
+  <p align="center">A simple Gulp 4 Starter Kit for modern web development.</p>
+</p>
+
+Requirements
+-----------
+* [NodeJS](http://nodejs.org/) >= v12.x.
+* [npm](https://www.npmjs.com/) v6.x.
 
 Run
 -----------
@@ -15,21 +23,31 @@ $ npm install
 $ gulp
 ```
 
-
-Requirements
+First instalation
 -----------
-* [NodeJS](http://nodejs.org/) v8.11.3 or latest installed.
-* [npm](https://www.npmjs.com/) v5.6.0 or latest installed.
-* [gulpJS](https://gulpjs.com/) installed.
+```
+$ npm install -g gulp
+
+$ npm install jade --global
+
+$ npm install -save-dev gulp
+
+$ npm install
+
+$ gulp
+```
 
 Dependencies list
 -----------
 ```
-"gulp"
+"autoprefixer"
 "browser-sync"
+"cssnano"
+"del"
+"gulp"
 "gulp-autoprefixer"
 "gulp-imagemin"
-"gulp-minify-css"
+"gulp-postcss"
 "gulp-rename"
 "gulp-sass"
 "gulp-uglify"
