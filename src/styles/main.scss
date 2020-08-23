@@ -37,8 +37,15 @@ button {
 	background-color: transparent;
 }
 
-.img-wrap
+.img-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	img {
-		width: 100%;
 		height: auto;	
+	}
+	h3 {
+		margin-top: 20px;
+	}
 }

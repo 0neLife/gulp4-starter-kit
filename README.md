@@ -10,7 +10,7 @@
 Requirements
 -----------
 * [NodeJS](http://nodejs.org/) >= v12.x.
-* [npm](https://www.npmjs.com/) v6.x.
+* [npm](https://www.npmjs.com/) >= v6.x.
 
 Run
 -----------
@@ -27,8 +27,6 @@ First instalation
 -----------
 ```
 $ npm install -g gulp
-
-$ npm install jade --global
 
 $ npm install -save-dev gulp
 
