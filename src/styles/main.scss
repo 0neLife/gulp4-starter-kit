@@ -1,51 +1,51 @@
 @import "index.scss";
 
 body {
-	overflow-x: hidden;
-	margin: 0;
-	padding: 0;
-	position: relative;
-	min-width: 320px;
-	font-family: $primary_font;
-	font-weight: $light;
-	font-size: $primary-fs;
-	line-height: 1.6;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-width: 320px;
+  font-family: $primary_font;
+  font-weight: $light;
+  font-size: $primary-fs;
+  line-height: 1.6;
 }
 
 h1,h2,h3,h4,h5,h6 {
-	font-family: "RobotoBold",sans-serif;
+  font-family: "RobotoBold",sans-serif;
 }
 
 h1,h2,h3,h4,h5,h6,ul,p {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 input,
 textarea,
 button {
-	outline: none;
-	border: none;
-	font-size: 14px;
+  outline: none;
+  border: none;
+  font-size: 14px;
 }
 
 button {
-	margin: 0;
-	padding: 0;
-	cursor: pointer;
-	background-color: transparent;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
 }
 
 .img-wrap {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	img {
-		height: auto;	
-	}
-	h3 {
-		margin-top: 20px;
-	}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  img {
+    height: auto;	
+  }
+  h3 {
+    margin-top: 20px;
+  }
 }
