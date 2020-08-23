@@ -1,44 +1,48 @@
 "use strict";
 
-const { series, src, dest, parallel } = require('gulp');
-
-const gulp 						= require('gulp'),
+// load plugins
+const autoprefixer 		= require('autoprefixer'),
+			browsersync 		= require('browser-sync').create(),
 			del 						= require('del'),
+			cssnano 			  = require('cssnano'),
+			imageminMozjpeg = require('imagemin-mozjpeg'),
+			gulp						= require('gulp'),  
 			sass 						= require('gulp-sass'),
 			rename 					= require('gulp-rename'),
 			uglify 					= require('gulp-uglify'),
-			autoprefixer 		= require('autoprefixer'),
 			postcss 				= require('gulp-postcss'),
-			cssnano 			  = require("cssnano"),
-			imagemin  			= require('gulp-imagemin'),
-			imageminMozjpeg = require('imagemin-mozjpeg'),
-			browsersync 		= require('browser-sync').create();
+			imagemin  			= require('gulp-imagemin');
 
-// BrowserSync
+// load gulp api methods
+const { series, src, dest, parallel } = require('gulp');
+
+// browserSync
 function browserSync(done) {
   browsersync.init({
 		server: {
-				baseDir: './dist'
+			baseDir: './dist'
 		},
 		port: 3000,
 		notify: false,
-		files: ['./dist/**/*.html','./dist/js/*.js','./dist/css/*.css','./dist/libs/*']
+		files: [
+			'./dist/**/*.html',
+			'./dist/js/*.js',
+			'./dist/css/*.css',
+			'./dist/libs/*'
+		]
 	});
 
   done();
 }
 
-// BrowserSync Reload
+// browserSync reload
 function browserSyncReload(done) {
-  browsersync.reload();
+	browsersync.reload();
+
   done();
 }
 
-// Clean assets
-function clean() {
-  return del(["./_site/assets/"]);
-}
-
+// copy all libraries
 function copyLibs() {
 	return (
 		src([
@@ -49,13 +53,15 @@ function copyLibs() {
 	)
 }
 
+// copy all fonts
 function copyFonts() {
 	return (
-		src(['src/fonts/**/*.{ttf,woff,eot}'])
+		src(['src/fonts/**/*.{ttf,woff,woff2}'])
 			.pipe(dest('dist/fonts/'))
 	)
 }
 
+// copy font-awesome icons 
 function copyFontAwesome() {
 	return (
 		src([
@@ -66,19 +72,24 @@ function copyFontAwesome() {
 	)
 }
 
-function imageCompression() {
+// compression all images
+function compressionImages() {
 	return (
 		src('src/img/*')
-			.pipe(imagemin([imageminMozjpeg({
-				quality: 85
-			})]))
+			.pipe(
+				imagemin([
+					imageminMozjpeg({
+						quality: 85
+					})
+				]))
 			.pipe(dest('dist/img/'))
 	)
 }
 
+// copy scss
 function styles() {
   return (
-		src('src/sass/*.sass')
+		src('src/styles/*.scss')
 			.pipe(sass({
 				includePaths: require('node-bourbon').includePaths
 			}).on('error', sass.logError))
@@ -88,6 +99,7 @@ function styles() {
 	)
 }
 
+// copy js
 function scripts() {
 	return (
 		src('src/js/**/*.js')
@@ -97,6 +109,7 @@ function scripts() {
 	)
 }
 
+// copy html
 function copyHtml() {
 	return (
 		src('src/**/*.html')
@@ -107,121 +120,29 @@ function copyHtml() {
 // Watch files
 function watchFiles() {
 	gulp.watch('src/libs/*', copyLibs);
-  gulp.watch('src/sass/*.sass', styles);
+  gulp.watch('src/styles/*.scss', styles);
 	gulp.watch('src/js/*.js', scripts);
   gulp.watch('src/*.html', copyHtml);
 }
 
+// clean build
+function clean() {
+  return del(['./dist']);
+}
+
 // define complex tasks
-const build = gulp.series(clean, gulp.parallel(styles, copyLibs, scripts, copyHtml, copyFonts, copyFontAwesome, imageCompression));
-const watch = gulp.parallel(watchFiles, browserSync);
+const build = series(clean, parallel(styles, copyLibs, scripts, copyHtml, copyFonts, copyFontAwesome, compressionImages));
+const watch = parallel(watchFiles, browserSync);
 
 // export tasks
 exports.copyLibs = copyLibs;
 exports.copyFonts = copyFonts;
 exports.copyFontAwesome = copyFontAwesome;
-exports.imageCompression = imageCompression;
+exports.compressionImages = compressionImages;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.copyHtml = copyHtml;
 exports.clean = clean;
 exports.build = build;
 exports.watch = watch;
-exports.default = build;
-
-
-// gulp.task('default', ['watch','browser-sync']);
-
-
-// const gulp 						= require('gulp'),
-// 			sass 						= require('gulp-sass'),
-// 			rename 					= require('gulp-rename'),
-// 			uglify 					= require('gulp-uglify'),
-// 			minifycss 			= require('gulp-minify-css'),
-// 			autoprefixer 		= require('gulp-autoprefixer'),
-// 			imagemin  			= require('gulp-imagemin'),
-// 			imageminMozjpeg = require('imagemin-mozjpeg'),
-// 			browserSync 		= require('browser-sync').create();
-
-// gulp.task('browser-sync', [
-// 						'styles',
-// 						'imageCompression',
-// 						'copyfontAwesome',
-// 						'copyfonts',
-// 						'copyLibs',
-// 						'copyHtml',
-// 						'scripts'
-// 							], function() {
-// 	browserSync.init({
-// 			server: {
-// 					baseDir: './dist'
-// 			},
-// 			notify: false,
-// 			files: ['./dist/**/*.html','./dist/js/*.js','./dist/css/*.css','./dist/libs/*']
-// 	});
-// });
-
-// gulp.task('styles', () => {
-// 	return gulp.src('src/sass/*.sass')
-// 	.pipe(sass({
-// 		includePaths: require('node-bourbon').includePaths
-// 	}).on('error', sass.logError))
-// 	.pipe(rename({suffix: '.min', prefix : ''}))
-// 	.pipe(autoprefixer({
-// 		browsers: ['last 15 versions', '> 1%', 'ie 8', 'ie 7'],
-// 		cascade: false
-// 	}))
-// 	.pipe(cleanCss(''))
-// 	.pipe(gulp.dest('dist/css'));
-// });
-
-// gulp.task('imageCompression', () =>
-//   gulp.src('src/img/*')
-//   .pipe(imagemin([imageminMozjpeg({
-//       quality: 85
-//   })]))
-//   .pipe(gulp.dest('dist/img/'))
-// );
-
-// gulp.task('copyfontAwesome', function() {
-//   return gulp.src([
-//   	'src/libs/font-awesome/webfonts/*.{ttf,woff,woff2,eot,svg}',
-//   	'src/libs/font-awesome/css/all.min.css'
-//   	])
-//   	.pipe(gulp.dest('dist/css/font-awesome/webfonts/'));
-// });
-
-// gulp.task('copyfonts', function() {
-//   return gulp.src([
-//   	'src/fonts/**/*.{ttf,woff,eot}'])
-//   	.pipe(gulp.dest('dist/fonts/'));
-// });
-
-// gulp.task('copyLibs', function() {
-// 	return gulp.src([
-// 		'src/libs/bootstrap-grid/*.css',
-// 		'src/libs/jquery/*.js'
-// 		])
-// 		.pipe(gulp.dest('dist/libs'));
-// });
-
-// gulp.task('scripts', function() {
-//   return gulp.src('src/js/**/*.js')
-// 		.pipe(uglify())
-// 		.pipe(rename({ suffix: '.min' }))
-// 		.pipe(gulp.dest('dist/js'))
-// });
-
-// gulp.task('copyHtml', function() {
-// 	return gulp.src('src/**/*.html')
-// 	.pipe(gulp.dest('dist'));
-// });
-
-// gulp.task('watch', function () {
-// 	gulp.watch('src/sass/*.sass', ['styles']);
-// 	gulp.watch('src/libs/*', ['copyLibs']);
-// 	gulp.watch('src/js/*.js', ['scripts']);
-// 	gulp.watch('src/*.html', ['copyHtml']);
-// });
-
-// gulp.task('default', ['watch','browser-sync']);
+exports.default = series(build, watch);

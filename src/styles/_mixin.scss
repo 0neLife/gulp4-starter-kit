@@ -1,0 +1,12 @@
+// connecting fonts
+@mixin font-face($font-name, $url, $font-weight, $font-style, $font-display) {
+  @font-face {
+    font-family: quote($font-name);
+    src: url($url+".woff") format("woff"),
+         url($url+".woff2") format("woff2"),
+         url($url+".ttf") format("truetype");
+    font-weight: $font-weight;
+    font-style: $font-style;
+    font-display: $font-display;
+  }
+}

@@ -1,14 +1,14 @@
 {
-  "name": "front-end-developer-resume",
+  "name": "gulp4-starter-kit",
   "version": "1.0.0",
-  "description": "My resume",
-  "author": "Yurii Butsan",
+  "description": "A simple Gulp 4 Starter Kit for modern web development.",
+  "author": "Yurii Butsan <butsan.yuriy@gmail.com>",
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "browser-sync": "^2.26.12",
     "cssnano": "^4.1.10",
     "del": "^5.1.0",
-    "gulp": "~4.0.2",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "~7.0.1",
     "gulp-imagemin": "~7.1.0",
     "gulp-postcss": "^8.0.0",
@@ -28,7 +28,7 @@
     "build": "gulp build"
   },
   "engines": {
-    "node": ">=12",
-    "npm": ">=6"
+    "node": ">= 12",
+    "npm": ">= 6"
   }
 }
