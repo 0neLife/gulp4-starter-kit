@@ -4,10 +4,12 @@
 const autoprefixer    = require('autoprefixer'),
       browsersync     = require('browser-sync').create(),
       del             = require('del'),
+      exec            = require('child_process').exec, // run command-line programs from gulp
       cssnano         = require('cssnano'),
       imageminMozjpeg = require('imagemin-mozjpeg'),
       gulp            = require('gulp'),
       sass            = require('gulp-sass'),
+      surge           = require('gulp-surge'),
       rename          = require('gulp-rename'),
       uglify          = require('gulp-uglify'),
       postcss         = require('gulp-postcss'),
@@ -130,6 +132,21 @@ function clean() {
   return del(['./dist']);
 }
 
+// Commit and push files to Git
+function git(done) {
+  return exec('git add . && git commit -m"surge deploy" && git push origin master');
+  done();
+}
+
+// Deploy prodject to surge
+function surgeDeploy(done) {
+  return surge({
+  project: './dist', // Path to your static build directory
+  domain: 'YOUR-DOMAIN-NAME.surge.sh'  // Your domain or Surge subdomain
+  })
+  done();
+}
+
 // define complex tasks
 const build = series(clean, parallel(styles, copyLibs, scripts, copyHtml, copyFonts, copyFontAwesome, compressionImages));
 const watch = parallel(watchFiles, browserSync);
@@ -146,3 +163,4 @@ exports.clean = clean;
 exports.build = build;
 exports.watch = watch;
 exports.default = series(build, watch);
+exports.deploy = series(git, build, surgeDeploy);
