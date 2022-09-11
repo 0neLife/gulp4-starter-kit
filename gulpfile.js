@@ -8,8 +8,8 @@ const autoprefixer    = require('autoprefixer'),
       cssnano         = require('cssnano'),
       imageminMozjpeg = require('imagemin-mozjpeg'),
       gulp            = require('gulp'),
-      sass            = require('gulp-sass'),
       surge           = require('gulp-surge'),
+      sass            = require('gulp-sass'),
       rename          = require('gulp-rename'),
       uglify          = require('gulp-uglify'),
       postcss         = require('gulp-postcss'),
@@ -48,10 +48,12 @@ function browserSyncReload(done) {
 function copyLibs() {
   return (
     src([
-      'src/libs/bootstrap-grid/*.css',
-      'src/libs/jquery/*.js'
+      'src/libs/bootstrap-grid/bootstrap-grid-4.0.0.min.css',
+      'src/libs/jquery/jquery-3.5.1.min.js',
+      'src/libs/jquery/jquery.inputmask.min.js',
+      'src/libs/moment-js/moment.min.js'
     ])
-      .pipe(dest('dist/libs'))
+      .pipe(dest('dist/libs/'))
   )
 }
 
@@ -91,13 +93,21 @@ function compressionImages() {
 // copy scss
 function styles() {
   return (
-    src('src/styles/*.scss')
+    src('src/styles/*.sass')
       .pipe(sass({
         includePaths: require('node-bourbon').includePaths
       }).on('error', sass.logError))
       .pipe(rename({ suffix: '.min', prefix: '' }))
       .pipe(postcss([autoprefixer(), cssnano()]))
       .pipe(dest('dist/css'))
+  )
+}
+
+// copy js
+function entryScripts() {
+  return (
+    src('src/*.js')
+      .pipe(dest('dist'))
   )
 }
 
@@ -133,23 +143,21 @@ function clean() {
 }
 
 // Commit and push files to Git
-function git(done) {
-  return exec('git add . && git commit -m"surge deploy" && git push origin master');
-  done();
+function git() {
+  return exec('git add . && git commit -m"surge deploy"');
 }
 
 // Deploy prodject to surge
-function surgeDeploy(done) {
+function surgeDeploy() {
   return surge({
   project: './dist', // Path to your static build directory
-  domain: 'YOUR-DOMAIN-NAME.surge.sh'  // Your domain or Surge subdomain
+  domain: '${YOUR_DOMAIN_NAME}.surge.sh'  // Your domain or Surge subdomain
   })
-  done();
 }
 
 // define complex tasks
-const build = series(clean, parallel(styles, copyLibs, scripts, copyHtml, copyFonts, copyFontAwesome, compressionImages));
-const watch = parallel(watchFiles, browserSync);
+const build = series(clean, parallel(styles, copyLibs, entryScripts, scripts, copyHtml, copyFonts, copyFontAwesome, compressionImages));
+const watch = parallel(watchFiles, browserSync, browserSyncReload);
 
 // export tasks
 exports.copyLibs = copyLibs;
@@ -157,10 +165,11 @@ exports.copyFonts = copyFonts;
 exports.copyFontAwesome = copyFontAwesome;
 exports.compressionImages = compressionImages;
 exports.styles = styles;
+exports.entryScripts = entryScripts;
 exports.scripts = scripts;
 exports.copyHtml = copyHtml;
 exports.clean = clean;
 exports.build = build;
 exports.watch = watch;
 exports.default = series(build, watch);
-exports.deploy = series(git, build, surgeDeploy);
+exports.deploy = series(build, surgeDeploy);
